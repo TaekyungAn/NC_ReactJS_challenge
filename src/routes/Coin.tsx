@@ -1,4 +1,5 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
 
@@ -31,8 +32,21 @@ interface RouteState {
 
 function Coin() {
   const [loading, setLoading] = useState(true);
+  // useLocation : Link에서 주는 정보 받아옴
+  // 부모 컴포넌트에서 fetch된 data(state)를 Link를 통해 받아올 수 있다.
   const { state } = useLocation() as RouteState;
   const { coinId } = useParams<"coinId">();
+  useEffect(() => {
+    (async () => {
+      const infoData = await axios(
+        `https://api.coinpaprika.com/v1/coins/${coinId}`
+      );
+      const priceData = await axios(
+        `https://api.coinpaprika.com/v1/tickers/${coinId}`
+      );
+      console.log(priceData.data);
+    })();
+  }, []);
   return (
     <Container>
       <Header>
