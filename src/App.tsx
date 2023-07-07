@@ -61,8 +61,10 @@ body{
   background-color: ${(props) => props.theme.bgColor};
   color: ${(props) => props.theme.textColor};
 }
+// Link는 a태그로 간주
 a{
   text-decoration: none;
+  color:inherit;
 }
 `;
 
