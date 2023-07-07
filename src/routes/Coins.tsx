@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -56,9 +57,8 @@ function Coins() {
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     (async () => {
-      const response = await fetch("https://api.coinpaprika.com/v1/coins");
-      const json = await response.json();
-      setCoins(json.slice(0, 100));
+      const res = await axios("https://api.coinpaprika.com/v1/coins");
+      setCoins(res.data.slice(0, 100));
       setLoading(false);
     })();
   }, []);
