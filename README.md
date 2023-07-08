@@ -1,46 +1,26 @@
-# Getting Started with Create React App
+# NomadCoder Challenge
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 1. Crypto Tracker
 
-## Available Scripts
+- 누르면 **다크모드**가 적용되는 토글 버튼을 만들어주세요.
+- `/:coinId`에서 홈으로 돌아갈 수 있는 버튼을 만들어주세요.
+- 강의에서 구현하지 않은 Coin의 `/:coinId/price`탭을 구현해주세요.
+- `/:coinId/chart`탭의 차트 형식을 **CandleStick** 형식으로 변경해주세요.
 
-In the project directory, you can run:
+## 2. ToDoList
 
-### `npm start`
+- **#5.0 ~ #5.19**를 수강하고, 강의에서 만든 To Do List에, Recoil을 사용하여 아래의 두 가지 기능을 추가해주세요.
+- 유저가 **커스텀 카테고리를 생성**할 수 있는 기능.
+- **localStorage**를 사용하여, 새로고침을 했을 때 이전의 데이터가 유지되는 기능(persistance).
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 3. Animation
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- #7.0 ~ #7.16을 수강하고, Framer-motion을 이용해 영상에 보이는 것과 동일한 애니메이션을 제작해주세요.
 
-### `npm test`
+## 4. Nomflix
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- `/`(home) 페이지에 **Latest movies**, **Top Rated Movies** 그리고 **Upcoming Movies**의 슬라이더를 추가해주세요.
+- `/tv` 페이지에 **Latest Shows**, **Airing Today**, **Popular**, **Top Rated**의 슬라이더를 추가해주세요.
+- `/search` 페이지에 검색한 **movie**와 **tv**의 결과가 담긴 슬라이더를 추가해주세요.
+- `/movie/:id` 페이지를 더욱 예쁘게 꾸며보세요.
+- `/tv/:id` 페이지를 추가해주세요.
