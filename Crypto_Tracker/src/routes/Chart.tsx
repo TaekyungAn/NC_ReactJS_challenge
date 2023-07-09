@@ -4,10 +4,10 @@ import { useLocation, useOutletContext } from "react-router-dom";
 import ReactApexChart from "react-apexcharts";
 import { Helmet } from "react-helmet";
 import { RouteState } from "./Coin";
-interface IChartProps {
+export interface IChartProps {
   coinId: string;
 }
-interface IHistorical {
+export interface IHistorical {
   time_open: number;
   time_close: number;
   open: string;
