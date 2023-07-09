@@ -1,5 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import Router from "./Routes";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 // Reset CSS 직접 입력 or import {Reset} from 'styled-rest'
 // https://github.com/zacanger/styled-reset/blob/master/src/index.ts
@@ -73,6 +74,7 @@ function App() {
     <>
       <GlobalStyle />
       <Router />
+      <ReactQueryDevtools initialIsOpen={true} />
     </>
   );
 }
