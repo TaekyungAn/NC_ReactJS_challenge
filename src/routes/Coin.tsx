@@ -53,6 +53,12 @@ const Header = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+
+  a {
+    position: absolute;
+    left: 0;
+  }
 `;
 
 const Tabs = styled.div`
@@ -174,6 +180,7 @@ function Coin() {
         />
       </Helmet>
       <Header>
+        <Link to="/">&lt; All Coins</Link>
         <Title>
           {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
         </Title>{" "}
