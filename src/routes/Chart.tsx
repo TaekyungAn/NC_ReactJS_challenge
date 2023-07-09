@@ -1,7 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchCoinHistory } from "../api";
-import { useOutletContext } from "react-router-dom";
+import { useLocation, useOutletContext } from "react-router-dom";
 import ReactApexChart from "react-apexcharts";
+import { Helmet } from "react-helmet";
+import { RouteState } from "./Coin";
 interface IChartProps {
   coinId: string;
 }
@@ -16,15 +18,24 @@ interface IHistorical {
   market_cap: number;
 }
 function Chart() {
+  const { state } = useLocation() as RouteState;
   // 부모 Outlet context로 넘겨받은 props => useOutletContext로 받아오기
   const { coinId } = useOutletContext<IChartProps>();
-  console.log(coinId);
-
-  const { isLoading, data } = useQuery<IHistorical[]>(["ohlcv", coinId], () =>
-    fetchCoinHistory(coinId)
+  const { isLoading, data } = useQuery<IHistorical[]>(
+    ["ohlcv", coinId],
+    () => fetchCoinHistory(coinId),
+    { refetchInterval: 10000 }
   );
   return (
     <div>
+      <Helmet>
+        <link
+          rel="icon"
+          type="image/png"
+          href={`https://coinicons-api.vercel.app/api/icon/${state?.symbol}`}
+          sizes="16x16"
+        />
+      </Helmet>
       {isLoading ? (
         "Loading chart..."
       ) : (
@@ -58,6 +69,7 @@ function Chart() {
               axisBorder: { show: false },
               type: "datetime",
               categories: data?.map((price) =>
+                // 니꼬쌤 API 호출 보내는 경우, tine_close에 현재 날짜를 초단위로 들어오게 되어 이를 변환해줘야 함
                 new Date(price.time_close * 1000).toISOString()
               ),
             },

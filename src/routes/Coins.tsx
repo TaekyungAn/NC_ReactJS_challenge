@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { fetchCoins } from "../api";
+import { Helmet } from "react-helmet";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -65,6 +66,15 @@ function Coins() {
 
   return (
     <Container>
+      <Helmet>
+        <title>Coins</title>
+        <link
+          rel="icon"
+          type="image/png"
+          href="https://www.iconpacks.net/icons/1/free-coin-icon-794-thumb.png"
+          sizes="16x16"
+        />
+      </Helmet>
       <Header>
         <Title>코인</Title>
       </Header>
@@ -74,7 +84,10 @@ function Coins() {
         <CoinsList>
           {data?.slice(0, 100).map((coin) => (
             <Coin key={coin.id}>
-              <Link to={`/${coin.id}`} state={{ name: coin.name }}>
+              <Link
+                to={`/${coin.id}`}
+                state={{ name: coin.name, symbol: coin.symbol.toLowerCase() }}
+              >
                 <Img
                   src={`https://coinicons-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}
                 />

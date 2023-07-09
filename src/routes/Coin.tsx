@@ -1,6 +1,4 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { useEffect, useState } from "react";
 import {
   Link,
   Outlet,
@@ -10,6 +8,7 @@ import {
 } from "react-router-dom";
 import styled from "styled-components";
 import { fetchCoinInfo, fetchCoinTickers } from "../api";
+import { Helmet } from "react-helmet";
 
 const Title = styled.h1`
   font-size: 48px;
@@ -78,8 +77,8 @@ const Tab = styled.span<{ $isActive: boolean }>`
   }
 `;
 
-interface RouteState {
-  state: { name: string };
+export interface RouteState {
+  state: { name: string; symbol: string };
 }
 
 // shift + alt + i (다중선택 후 커서 맨 뒤로 보내기)
@@ -151,7 +150,10 @@ function Coin() {
   // {isLoading, data}와 query key의 값은 중복되지 않도록 구분한다.
   const { isLoading: infoLoading, data: infoData } = useQuery<IInfoData>(
     ["info", coinId],
-    () => fetchCoinInfo(coinId!)
+    () => fetchCoinInfo(coinId!),
+    // refetchInterval: 숫자로 설정하면 밀리초 단위로 계속해서 refetch
+    // 함수로 설정하면 최신 데이터로 함수가 실행되고 빈도를 계산하는 쿼리 실행
+    { refetchInterval: 5000 }
   );
   const { isLoading: tickersLoading, data: tickersData } = useQuery<IPriceData>(
     ["tickers", coinId],
@@ -160,6 +162,17 @@ function Coin() {
   const loading = infoLoading || tickersLoading;
   return (
     <Container>
+      <Helmet>
+        <title>
+          {state?.name ? state.name : loading ? "loading..." : infoData?.name}
+        </title>
+        <link
+          rel="icon"
+          type="image/png"
+          href={`https://coinicons-api.vercel.app/api/icon/${state?.symbol}`}
+          sizes="16x16"
+        />
+      </Helmet>
       <Header>
         <Title>
           {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
@@ -179,8 +192,8 @@ function Coin() {
               <span>${infoData?.symbol}</span>
             </OverviewItem>
             <OverviewItem>
-              <span>Open Source:</span>
-              <span>{infoData?.open_source ? "Yes" : "No"}</span>
+              <span>Price:</span>
+              <span>${tickersData?.quotes.USD.price.toFixed(3)}</span>
             </OverviewItem>
           </Overview>
           <Description>{infoData?.description}</Description>
@@ -197,10 +210,14 @@ function Coin() {
           <Tabs>
             {/* isActive 에러메세지 발생 => $isActive */}
             <Tab $isActive={chartMatch !== null}>
-              <Link to="chart">Chart</Link>
+              <Link to="chart" state={{ symbol: state.symbol }}>
+                Chart
+              </Link>
             </Tab>
             <Tab $isActive={priceMatch !== null}>
-              <Link to="price">Price</Link>
+              <Link to="price" state={{ symbol: state.symbol }}>
+                Price
+              </Link>
             </Tab>
           </Tabs>
           {/**context로 props전달 */}
