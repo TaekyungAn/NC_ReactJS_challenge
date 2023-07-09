@@ -148,6 +148,7 @@ function Coin() {
   const priceMatch = useMatch("/:coinId/price");
   const chartMatch = useMatch("/:coinId/chart");
 
+  // {isLoading, data}와 query key의 값은 중복되지 않도록 구분한다.
   const { isLoading: infoLoading, data: infoData } = useQuery<IInfoData>(
     ["info", coinId],
     () => fetchCoinInfo(coinId!)
@@ -202,7 +203,8 @@ function Coin() {
               <Link to="price">Price</Link>
             </Tab>
           </Tabs>
-          <Outlet />
+          {/**context로 props전달 */}
+          <Outlet context={{ coinId }} />
         </>
       )}
     </Container>
