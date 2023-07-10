@@ -1,8 +1,8 @@
 import { ThemeProvider, createGlobalStyle } from "styled-components";
-import Router from "./Router";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { darkTheme, lightTheme } from "./theme";
 import { useState } from "react";
+import { Outlet } from "react-router-dom";
 
 // Reset CSS 직접 입력 or import {Reset} from 'styled-rest'
 // https://github.com/zacanger/styled-reset/blob/master/src/index.ts
@@ -77,9 +77,8 @@ function App() {
   return (
     <>
       <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
-        <button onClick={toggleDark}>Toggle Mode</button>
         <GlobalStyle />
-        <Router />
+        <Outlet context={{ toggleDark, isDark }} />
         <ReactQueryDevtools initialIsOpen={true} />
       </ThemeProvider>
     </>

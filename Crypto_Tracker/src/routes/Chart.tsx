@@ -3,7 +3,7 @@ import { fetchCoinHistory } from "../api";
 import { useLocation, useOutletContext } from "react-router-dom";
 import ReactApexChart from "react-apexcharts";
 import { Helmet } from "react-helmet";
-import { RouteState } from "./Coin";
+import { RouteState, IToggleDarkType } from "./Coin";
 export interface IChartProps {
   coinId: string;
 }
@@ -21,6 +21,7 @@ function Chart() {
   const { state } = useLocation() as RouteState;
   // 부모 Outlet context로 넘겨받은 props => useOutletContext로 받아오기
   const { coinId } = useOutletContext<IChartProps>();
+  const { isDark } = useOutletContext<IToggleDarkType>();
   const { isLoading, data } = useQuery<IHistorical[]>(
     ["ohlcv", coinId],
     () => fetchCoinHistory(coinId),
@@ -50,7 +51,7 @@ function Chart() {
             },
           ]}
           options={{
-            theme: { mode: "dark" },
+            theme: { mode: isDark ? "dark" : "light" },
             chart: {
               height: 300,
               width: 500,

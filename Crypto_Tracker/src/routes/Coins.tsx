@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { Link } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 import styled from "styled-components";
 import { fetchCoins } from "../api";
 import { Helmet } from "react-helmet";
@@ -61,10 +61,14 @@ interface ICoin {
   type: string;
 }
 
+interface ICoinsProps {
+  toggleDark: () => void;
+}
+
 function Coins() {
   // @tanstack/react-query에서 useQuery를 사용할때 query key의 값은 대괄호로 묶어줘야 함
   const { isLoading, data } = useQuery<ICoin[]>(["allCoins"], fetchCoins);
-
+  const { toggleDark } = useOutletContext<ICoinsProps>();
   return (
     <Container>
       <Helmet>
@@ -78,6 +82,7 @@ function Coins() {
       </Helmet>
       <Header>
         <Title>코인</Title>
+        <button onClick={toggleDark}>Toggle Dark Mode</button>
       </Header>
       {isLoading ? (
         <Loader>Loading...</Loader>
