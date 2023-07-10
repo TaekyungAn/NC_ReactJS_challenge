@@ -1,5 +1,5 @@
 import { ThemeProvider, createGlobalStyle } from "styled-components";
-import Router from "./Routes";
+import Router from "./Router";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { darkTheme, lightTheme } from "./theme";
 import { useState } from "react";
