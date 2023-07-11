@@ -73,6 +73,7 @@ a{
 `;
 
 function App() {
+  // useRecoilValue: Recoil state값을 반환
   const isDark = useRecoilValue(isDarkAtom);
   return (
     <>

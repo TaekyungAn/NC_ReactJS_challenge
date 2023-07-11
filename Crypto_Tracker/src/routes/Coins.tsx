@@ -64,6 +64,7 @@ interface ICoin {
 }
 
 function Coins() {
+  // useSetRecoilState: Recoil state의 값을 업데이트하기 위한 setter 함수를 반환
   const setDarkAtom = useSetRecoilState(isDarkAtom);
   const toggleDarkAtom = () => setDarkAtom((prev) => !prev);
   // @tanstack/react-query에서 useQuery를 사용할때 query key의 값은 대괄호로 묶어줘야 함
