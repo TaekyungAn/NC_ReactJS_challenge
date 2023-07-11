@@ -4,7 +4,6 @@ import {
   Outlet,
   useLocation,
   useMatch,
-  useOutletContext,
   useParams,
 } from "react-router-dom";
 import styled from "styled-components";
