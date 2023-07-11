@@ -7,6 +7,7 @@ interface IForm {
   username: string;
   password: string;
   password1: string;
+  extraError?: string;
 }
 function ToDoList() {
   // register():  input을 등록하거나 element를 선택하고 유효성 검사 규칙을 React Hook Form에 적용
@@ -17,11 +18,19 @@ function ToDoList() {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
     // defaultValues: input에 미리 입력되어있는 값
   } = useForm<IForm>({ defaultValues: { email: "@naver.com" } });
   // onValid: valid가 성공적으로 마치면 수행되는 함수
-  const onValid = (data: any) => {
-    console.log(data);
+  const onValid = (data: IForm) => {
+    if (data.password !== data.password1) {
+      setError(
+        "password1",
+        { message: "Password are not the same" },
+        { shouldFocus: true }
+      );
+    }
+    // setError("extraError", { message: "Server offline" });
   };
   return (
     <div>
@@ -41,7 +50,15 @@ function ToDoList() {
         />
         <span>{errors?.email?.message}</span>
         <input
-          {...register("firstName", { required: "write here" })}
+          {...register("firstName", {
+            required: "write here",
+            validate: {
+              noNico: (value) =>
+                value.includes("nico") ? "no nicos allowed" : true,
+              noNick: (value) =>
+                value.includes("nick") ? "no nicks allowed" : true,
+            },
+          })}
           placeholder="First Name"
         />
         <span>{errors?.firstName?.message}</span>
@@ -51,7 +68,7 @@ function ToDoList() {
         />
         <span>{errors?.lastName?.message}</span>
         <input
-          {...register("username", { required: "write here", minLength: 10 })}
+          {...register("username", { required: "write here", minLength: 2 })}
           placeholder="Username"
         />
         <span>{errors?.username?.message}</span>
@@ -72,6 +89,7 @@ function ToDoList() {
         />
         <span>{errors?.password1?.message}</span>
         <button>Add</button>
+        <span>{errors?.extraError?.message}</span>
       </form>
     </div>
   );
