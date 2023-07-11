@@ -144,9 +144,6 @@ interface IPriceData {
     };
   };
 }
-export interface IToggleDarkType {
-  isDark: boolean;
-}
 function Coin() {
   // useLocation : Link에서 주는 정보 받아옴
   // 부모 컴포넌트에서 fetch된 data(state)를 Link를 통해 받아올 수 있다.
@@ -155,7 +152,6 @@ function Coin() {
   // useMatch : 현재 위치를 기준으로 지정된 경로에 대한 일치 데이터를 반환
   const priceMatch = useMatch("/:coinId/price");
   const chartMatch = useMatch("/:coinId/chart");
-  const { isDark } = useOutletContext<IToggleDarkType>();
   // {isLoading, data}와 query key의 값은 중복되지 않도록 구분한다.
   const { isLoading: infoLoading, data: infoData } = useQuery<IInfoData>(
     ["info", coinId],
@@ -231,7 +227,7 @@ function Coin() {
             </Tab>
           </Tabs>
           {/**context로 props전달 */}
-          <Outlet context={{ coinId, isDark }} />
+          <Outlet context={{ coinId }} />
         </>
       )}
     </Container>
