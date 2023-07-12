@@ -1,9 +1,10 @@
-import { Categories, IToDo, toDoState } from "../atoms";
-import { useSetRecoilState } from "recoil";
+import { IToDo, newCategoryState, toDoState } from "../atoms";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 function ToDo({ text, category, id }: IToDo) {
   // atom 상태 변경
   const setToDos = useSetRecoilState(toDoState);
+  const newCategories = useRecoilValue(newCategoryState);
   // 이벤트 인자 통해서 name으로 보내는 방법
   const onClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     const {
@@ -12,7 +13,7 @@ function ToDo({ text, category, id }: IToDo) {
     setToDos((oldToDos) => {
       const targetIndex = oldToDos.findIndex((toDo) => toDo.id === id);
       const oldToDo = oldToDos[targetIndex];
-      const newToDo = { text, id, category: name as any };
+      const newToDo = { text, id, category: name };
       console.log(oldToDo, newToDo);
       console.log(targetIndex);
       return [
@@ -25,21 +26,30 @@ function ToDo({ text, category, id }: IToDo) {
   return (
     <li>
       <span>{text}</span>
-      {category !== Categories.DOING && (
-        <button name={Categories.DOING} onClick={onClick}>
+      {category !== "DOING" && (
+        <button name="DOING" onClick={onClick}>
           Doing
         </button>
       )}
-      {category !== Categories.TO_DO && (
-        <button name={Categories.TO_DO} onClick={onClick}>
+      {category !== "TO_DO" && (
+        <button name={"TO_DO"} onClick={onClick}>
           To Do
         </button>
       )}
-      {category !== Categories.DONE && (
-        <button name={Categories.DONE} onClick={onClick}>
+      {category !== "DONE" && (
+        <button name={"DONE"} onClick={onClick}>
           Done
         </button>
       )}
+      {newCategories.map((item) => {
+        if (category !== item) {
+          return (
+            <button name={item} onClick={onClick}>
+              {item}
+            </button>
+          );
+        }
+      })}
     </li>
   );
 }
