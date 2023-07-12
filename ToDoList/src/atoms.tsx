@@ -1,4 +1,10 @@
 import { selector, atom } from "recoil";
+import { recoilPersist } from "recoil-persist";
+
+const { persistAtom } = recoilPersist({
+  key: "todoLocal",
+  storage: localStorage,
+});
 
 export enum Categories {
   "TO_DO" = "TO_DO",
@@ -20,6 +26,7 @@ export const categoryState = atom<Categories>({
 export const toDoState = atom<IToDo[]>({
   key: "toDo",
   default: [],
+  effects_UNSTABLE: [persistAtom],
 });
 
 // selector: atom의 output을 변형한 값만 담아올 수 있음
